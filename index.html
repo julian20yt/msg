@@ -94,7 +94,9 @@
 
   <div id="imageModal">
     <span id="closeModal" onclick="closeImage()">&times;</span>
-    <img id="screenshotImg" src="https://cvmapi.elijahr.dev/api/v1/screenshot/vm7" alt="Screenshot">
+    <div id="imageContainer">
+      <img id="screenshotImg" src="https://cvmapi.elijahr.dev/api/v1/screenshot/vm7" alt="Screenshot">
+    </div>
     <button id="reloadButtonInModal" onclick="reloadImage()">Reload Screenshot</button>
   </div>
 
@@ -128,10 +130,13 @@
     }
 
     function reloadImage() {
-      const img = document.getElementById("screenshotImg");
-      const currentSrc = img.src;
-      img.src = '';         // Unload first
-      img.src = currentSrc; // Reload same URL
+      const container = document.getElementById("imageContainer");
+      container.innerHTML = ''; // Clear current image
+      const newImg = document.createElement("img");
+      newImg.id = "screenshotImg";
+      newImg.src = "https://cvmapi.elijahr.dev/api/v1/screenshot/vm7";
+      newImg.alt = "Screenshot";
+      container.appendChild(newImg);
     }
   </script>
 </body>
