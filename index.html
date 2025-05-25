@@ -108,7 +108,8 @@
         const messagesDiv = document.getElementById("messages");
         messagesDiv.innerHTML = "";
 
-        data.forEach(msg => {
+        // Reverse the array so newest appears first (top to bottom)
+        [...data].reverse().forEach(msg => {
           const username = msg.username || "Unknown";
           const text = msg.message || "";
           const div = document.createElement("div");
