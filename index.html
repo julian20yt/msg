@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>VM7 Chat Viewer</title>
   <style>
     body {
@@ -95,7 +95,11 @@
   <div id="imageModal">
     <span id="closeModal" onclick="closeImage()">&times;</span>
     <div id="imageContainer">
-      <img id="screenshotImg" src="https://cvmapi.elijahr.dev/api/v1/screenshot/vm7" alt="Screenshot">
+      <img
+        id="screenshotImg"
+        src="https://cvmapi.elijahr.dev/api/v1/screenshot/vm7"
+        alt="Screenshot"
+      />
     </div>
     <button id="reloadButtonInModal" onclick="reloadImage()">Reload Screenshot</button>
   </div>
@@ -103,13 +107,14 @@
   <script>
     async function loadMessages() {
       try {
-        const res = await fetch("https://cvmapi.elijahr.dev/api/v1/chatlogs?vm=vm7&count=50");
+        const res = await fetch(
+          "https://cvmapi.elijahr.dev/api/v1/chatlogs?vm=vm7&count=50"
+        );
         const data = await res.json();
         const messagesDiv = document.getElementById("messages");
         messagesDiv.innerHTML = "";
 
-        // Reverse the array so newest appears first (top to bottom)
-        [...data].reverse().forEach(msg => {
+        [...data].reverse().forEach((msg) => {
           const username = msg.username || "Unknown";
           const text = msg.message || "";
           const div = document.createElement("div");
@@ -132,11 +137,16 @@
 
     function reloadImage() {
       const container = document.getElementById("imageContainer");
-      container.innerHTML = ''; // Clear current image
+      container.innerHTML = ""; // Remove existing image
+
       const newImg = document.createElement("img");
       newImg.id = "screenshotImg";
-      newImg.src = "https://cvmapi.elijahr.dev/api/v1/screenshot/vm7";
       newImg.alt = "Screenshot";
+      // Cache busting with timestamp query param:
+      newImg.src =
+        "https://cvmapi.elijahr.dev/api/v1/screenshot/vm7?t=" +
+        new Date().getTime();
+
       container.appendChild(newImg);
     }
   </script>
