@@ -54,13 +54,15 @@
       background-color: rgba(0,0,0,0.8);
       justify-content: center;
       align-items: center;
+      flex-direction: column;
     }
 
     #imageModal img {
       max-width: 95%;
-      max-height: 90%;
+      max-height: 80%;
       border: 5px solid white;
       border-radius: 4px;
+      margin-bottom: 10px;
     }
 
     #closeModal {
@@ -72,19 +74,28 @@
       font-weight: bold;
       cursor: pointer;
     }
+
+    #reloadButtonInModal {
+      padding: 8px 16px;
+      font-size: 14px;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
   <h1>VM7 Chat Viewer</h1>
   <button onclick="loadMessages()">Load / Refresh Messages</button>
   <button onclick="showImage()">View Screenshot</button>
-  <button onclick="reloadImage()">Reload Screenshot</button>
 
   <div id="messages"></div>
 
-  <div id="imageModal" onclick="closeImage()">
-    <span id="closeModal">&times;</span>
+  <div id="imageModal">
+    <span id="closeModal" onclick="closeImage()">&times;</span>
     <img id="screenshotImg" src="https://cvmapi.elijahr.dev/api/v1/screenshot/vm7" alt="Screenshot">
+    <button id="reloadButtonInModal" onclick="reloadImage()">Reload Screenshot</button>
   </div>
 
   <script>
@@ -118,7 +129,9 @@
 
     function reloadImage() {
       const img = document.getElementById("screenshotImg");
-      img.src = "https://cvmapi.elijahr.dev/api/v1/screenshot/vm7?t=" + new Date().getTime();
+      const currentSrc = img.src;
+      img.src = '';         // Unload first
+      img.src = currentSrc; // Reload same URL
     }
   </script>
 </body>
